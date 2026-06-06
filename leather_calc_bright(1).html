@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Stitch & Sell — Leather Pricing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:    #FFFBF5;
+  --cream:    #FFF4E6;
+  --terra:    #E8532A;
+  --terra-lt: #FF7A52;
+  --terra-bg: #FFF0EB;
+  --sun:      #F4B942;
+  --sun-lt:   #FFD166;
+  --sun-bg:   #FFFBEE;
+  --sage:     #5B8C5A;
+  --sage-lt:  #7DB87C;
+  --sage-bg:  #EFF6EF;
+  --sky:      #3A86C8;
+  --sky-bg:   #EBF4FB;
+  --plum:     #7B4F9E;
+  --plum-bg:  #F4EEF9;
+  --ink:      #1E1208;
+  --gray:     #6B6059;
+  --gray-lt:  #A89F97;
+  --border:   #E8DDD4;
+  --shadow:   0 2px 12px rgba(30,18,8,0.10);
+  --shadow-lg:0 8px 32px rgba(30,18,8,0.14);
+  --radius:   16px;
+  --radius-sm:10px;
+  --radius-xs:7px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Subtle dot pattern bg */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, #E8DDD4 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--terra);
+  padding: 14px 18px 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.logo em {
+  display: block;
+  font-style: normal;
+  font-size: 9px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.currency-pill {
+  background: rgba(255,255,255,0.18);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px 5px 10px;
+}
+
+.currency-pill select {
+  background: none;
+  border: none;
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+.currency-pill select option { background: var(--terra); color: #fff; }
+
+.currency-pill svg { width: 14px; height: 14px; color: rgba(255,255,255,0.7); }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border-top: 1.5px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  box-shadow: 0 -4px 20px rgba(30,18,8,0.08);
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 4px 8px;
+  background: none;
+  border: none;
+  color: var(--gray-lt);
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+  position: relative;
+}
+
+.nav-btn.active { color: var(--terra); }
+
+.nav-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  height: 2.5px;
+  background: var(--terra);
+  border-radius: 0 0 3px 3px;
+}
+
+.nav-btn svg { width: 22px; height: 22px; }
+
+/* ── MAIN ── */
+main {
+  flex: 1;
+  padding: 16px 14px 90px;
+}
+
+.page { display: none; }
+.page.active { display: block; animation: slideUp 0.22s ease; }
+
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── PAGE TITLE ── */
+.page-head { margin-bottom: 18px; }
+
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.page-title span { color: var(--terra); }
+
+.page-sub {
+  font-size: 12px;
+  color: var(--gray);
+  font-weight: 500;
+  margin-top: 3px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-icon svg { width: 17px; height: 17px; }
+
+.ci-terra { background: var(--terra-bg); color: var(--terra); }
+.ci-sun   { background: var(--sun-bg);   color: #C8861A; }
+.ci-sage  { background: var(--sage-bg);  color: var(--sage); }
+.ci-sky   { background: var(--sky-bg);   color: var(--sky); }
+.ci-plum  { background: var(--plum-bg);  color: var(--plum); }
+
+.card-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ── PRODUCT GRID ── */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  margin-bottom: 14px;
+}
+
+.product-chip {
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 4px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.18s;
+  text-align: center;
+}
+
+.product-chip:active { transform: scale(0.96); }
+
+.product-chip.selected {
+  border-color: var(--terra);
+  background: var(--terra-bg);
+}
+
+.chip-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border: 1px solid var(--border);
+  transition: all 0.18s;
+}
+
+.product-chip.selected .chip-icon {
+  background: var(--terra);
+  border-color: var(--terra);
+}
+
+.chip-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--gray);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  transition: color 0.18s;
+}
+
+.product-chip.selected .chip-label { color: var(--terra); }
+
+/* ── FORM ELEMENTS ── */
+.field { margin-bottom: 10px; }
+
+.field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gray);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-xs);
+  color: var(--ink);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color 0.18s, background 0.18s;
+  -webkit-appearance: none;
+}
+
+.field input:focus { border-color: var(--terra); background: #fff; }
+.field select option { background: #fff; }
+.field input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+/* ── INGREDIENT ROWS ── */
+.ing-header {
+  display: grid;
+  grid-template-columns: 2fr 0.7fr 1fr 28px;
+  gap: 6px;
+  margin-bottom: 5px;
+  padding: 0 2px;
+}
+
+.ing-header span {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--gray-lt);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ing-row {
+  display: grid;
+  grid-template-columns: 2fr 0.7fr 1fr 28px;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.ing-row input, .ing-row select {
+  width: 100%;
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-xs);
+  color: var(--ink);
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 8px;
+  outline: none;
+  transition: border-color 0.18s;
+  -webkit-appearance: none;
+}
+
+.ing-row input:focus { border-color: var(--terra); background: #fff; }
+
+.del-btn {
+  width: 28px;
+  height: 32px;
+  background: #FFF0EB;
+  border: 1.5px solid #FFCFBF;
+  border-radius: var(--radius-xs);
+  color: var(--terra);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.del-btn:active { background: #FFD5C6; }
+
+.add-row-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: none;
+  border: 1.5px dashed var(--terra-lt);
+  border-radius: var(--radius-xs);
+  color: var(--terra);
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 4px;
+  transition: background 0.15s;
+}
+
+.add-row-btn:active { background: var(--terra-bg); }
+
+/* ── TAB STRIP ── */
+.tab-strip {
+  display: flex;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 30px;
+  padding: 3px;
+  margin-bottom: 14px;
+  gap: 2px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 8px 4px;
+  background: none;
+  border: none;
+  border-radius: 26px;
+  color: var(--gray);
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  background: var(--terra);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(232,83,42,0.35);
+}
+
+/* ── RANGE SLIDER ── */
+.slider-wrap { padding: 4px 0 0; }
+
+.slider-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.slider-row label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gray);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.slider-val {
+  background: var(--terra);
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 20px;
+  min-width: 56px;
+  text-align: center;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--terra) var(--pct,40%), var(--border) var(--pct,40%));
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--terra);
+  box-shadow: 0 2px 8px rgba(232,83,42,0.3);
+}
+
+.slider-hints {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--gray-lt);
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+/* ── STAT TILES ── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.stat-tile {
+  border-radius: var(--radius-sm);
+  padding: 13px 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-tile::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+}
+
+.st-terra { background: var(--terra); color: #fff; }
+.st-sun   { background: var(--sun);   color: var(--ink); }
+.st-sage  { background: var(--sage);  color: #fff; }
+.st-sky   { background: var(--sky);   color: #fff; }
+
+.stat-tile .t-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: 5px;
+}
+
+.stat-tile .t-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* ── HERO PRICE ── */
+.price-hero {
+  background: linear-gradient(135deg, var(--terra) 0%, #C8391A 100%);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  text-align: center;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(232,83,42,0.35);
+}
+
+.price-hero::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+}
+
+.price-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -20px; left: -20px;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+}
+
+.price-hero .ph-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.price-hero .ph-price {
+  font-family: 'Syne', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.price-hero .ph-cur {
+  font-size: 22px;
+  vertical-align: super;
+  font-weight: 700;
+}
+
+.price-hero .ph-note {
+  font-size: 11px;
+  color: rgba(255,255,255,0.65);
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+/* ── BREAKDOWN ── */
+.breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.breakdown-item:last-child { border-bottom: none; }
+
+.bi-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray);
+}
+
+.bi-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bi-amount {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.breakdown-item.total .bi-label { color: var(--ink); font-weight: 700; font-size: 14px; }
+.breakdown-item.total .bi-amount { color: var(--terra); font-size: 16px; }
+
+/* ── BUTTONS ── */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+  width: 100%;
+  letter-spacing: 0.01em;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-terra { background: var(--terra); color: #fff; box-shadow: 0 4px 14px rgba(232,83,42,0.35); }
+.btn-terra:active { background: #C8391A; }
+
+.btn-sage { background: var(--sage); color: #fff; box-shadow: 0 4px 14px rgba(91,140,90,0.3); }
+.btn-sage:active { background: #4A7549; }
+
+.btn-outline {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  color: var(--ink);
+}
+
+.btn-outline:active { background: var(--cream); }
+
+.btn-danger {
+  background: #FFF0EB;
+  border: 1.5px solid #FFCFBF;
+  color: var(--terra);
+  font-size: 13px;
+  padding: 10px;
+}
+
+.btn-sm { padding: 8px 14px; font-size: 12px; width: auto; }
+.btn-row { display: flex; flex-direction: column; gap: 8px; }
+
+/* ── NOTICE ── */
+.notice {
+  background: var(--sun-bg);
+  border: 1.5px solid #F4D98A;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #7A5C00;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.notice svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px; color: #C8861A; }
+
+/* ── SAVED PRODUCTS ── */
+.prod-card {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.18s;
+}
+
+.prod-card:active { box-shadow: none; }
+
+.prod-emoji {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--terra-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.prod-info { flex: 1; min-width: 0; }
+
+.prod-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prod-meta { font-size: 11px; font-weight: 600; color: var(--gray-lt); margin-top: 2px; }
+
+.prod-price { text-align: right; flex-shrink: 0; }
+
+.prod-sell {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--terra);
+  line-height: 1;
+}
+
+.prod-margin {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sage);
+  margin-top: 2px;
+}
+
+/* ── EMPTY STATE ── */
+.empty {
+  text-align: center;
+  padding: 52px 24px;
+}
+
+.empty-icon {
+  font-size: 52px;
+  margin-bottom: 12px;
+}
+
+.empty-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.empty p {
+  font-size: 13px;
+  color: var(--gray);
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* ── SETTINGS ── */
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.setting-item:last-child { border-bottom: none; }
+
+.si-text { }
+.si-label { font-size: 14px; font-weight: 700; color: var(--ink); }
+.si-meta  { font-size: 11px; color: var(--gray-lt); font-weight: 600; margin-top: 2px; }
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.badge-terra { background: var(--terra-bg); color: var(--terra); }
+.badge-sage  { background: var(--sage-bg);  color: var(--sage); }
+.badge-sun   { background: var(--sun-bg);   color: #8B6400; }
+
+/* ── LABOR TIP ── */
+.labor-info {
+  background: var(--sky-bg);
+  border: 1.5px solid #BAD9F2;
+  border-radius: var(--radius-sm);
+  padding: 11px 13px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.labor-info svg { width: 16px; height: 16px; color: var(--sky); flex-shrink: 0; margin-top: 1px; }
+.labor-info p { font-size: 12px; font-weight: 600; color: #1E5080; line-height: 1.5; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #fff;
+  padding: 11px 22px;
+  border-radius: 30px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  z-index: 999;
+  white-space: nowrap;
+  box-shadow: 0 6px 24px rgba(30,18,8,0.25);
+  animation: toastIn 0.25s ease;
+}
+
+@keyframes toastIn {
+  from { opacity:0; transform: translateX(-50%) translateY(10px); }
+  to   { opacity:1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── PRINT ── */
+@media print {
+  body { background: white; }
+  header, nav, .no-print { display: none !important; }
+  main { padding: 0; }
+  #pg-calc { display: block !important; }
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    Stitch &amp; Sell
+    <em>Leather Cost Calculator</em>
+  </div>
+  <div class="currency-pill">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a2.5 2.5 0 0 1 0 5H9v2h5"/></svg>
+    <select id="curSelect" onchange="setCurrency(this.value)">
+      <option>AED</option><option>PHP</option><option>USD</option>
+      <option>GBP</option><option>EUR</option><option>SGD</option>
+    </select>
+  </div>
+</header>
+
+<main>
+
+  <!-- ══ CALCULATOR PAGE ══ -->
+  <div class="page active" id="pg-calc">
+    <div class="page-head">
+      <div class="page-title">New <span>Calc</span></div>
+      <div class="page-sub">Figure out your real cost &amp; profit</div>
+    </div>
+
+    <!-- Product picker -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon ci-terra">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="1"/></svg>
+        </div>
+        <div class="card-label">What are you making?</div>
+      </div>
+      <div class="product-grid" id="prodGrid"></div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Product name</label>
+        <input type="text" id="prodName" placeholder="e.g. Tan Bifold Wallet" autocomplete="off">
+      </div>
+    </div>
+
+    <!-- Tab strip -->
+    <div class="tab-strip">
+      <button class="tab-btn active" onclick="goTab('mat')">Materials</button>
+      <button class="tab-btn" onclick="goTab('labor')">Labor</button>
+      <button class="tab-btn" onclick="goTab('over')">Overhead</button>
+      <button class="tab-btn" onclick="goTab('price')">Pricing</button>
+    </div>
+
+    <!-- TAB: MATERIALS -->
+    <div id="tab-mat">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon ci-terra">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <div class="card-label">Leather &amp; Raw Materials</div>
+        </div>
+        <div class="ing-header">
+          <span>Material</span><span>Qty</span><span>Cost ea.</span><span></span>
+        </div>
+        <div id="matRows"></div>
+        <button class="add-row-btn" onclick="addMat()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add material
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon ci-sun">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </div>
+          <div class="card-label">Hardware, Thread &amp; Supplies</div>
+        </div>
+        <div class="ing-header">
+          <span>Item</span><span>Qty</span><span>Cost ea.</span><span></span>
+        </div>
+        <div id="hwRows"></div>
+        <button class="add-row-btn" onclick="addHw()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add hardware / thread / dye
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB: LABOR -->
+    <div id="tab-labor" style="display:none;">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon ci-sage">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="card-label">Your Time &amp; Labor</div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Hourly rate (<span class="csym">AED</span>)</label>
+            <input type="number" id="rate" value="25" min="0" step="0.5" oninput="recalc()">
+          </div>
+          <div class="field">
+            <label>Time (minutes)</label>
+            <input type="number" id="mins" value="60" min="0" step="5" oninput="recalc()">
+          </div>
+        </div>
+        <div class="stat-tile st-sage" style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+          <span class="t-label" style="margin:0;">Labor cost</span>
+          <span id="laborVal" style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;">AED 0.00</span>
+        </div>
+        <div class="labor-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <p>Include cutting, stitching, burnishing, edge finishing, and photography time for accurate pricing.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: OVERHEAD -->
+    <div id="tab-over" style="display:none;">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon ci-sky">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="card-label">Overhead &amp; Running Costs</div>
+        </div>
+        <div class="field"><label>Packaging (<span class="csym">AED</span> / piece)</label><input type="number" id="pkg" value="0" min="0" step="0.5" oninput="recalc()"></div>
+        <div class="field"><label>Tools / equipment share (<span class="csym">AED</span>)</label><input type="number" id="tools" value="0" min="0" step="0.5" oninput="recalc()"></div>
+        <div class="field"><label>Workspace / rent share (<span class="csym">AED</span>)</label><input type="number" id="rent" value="0" min="0" step="0.5" oninput="recalc()"></div>
+        <div class="field"><label>Shipping / delivery (<span class="csym">AED</span>)</label><input type="number" id="ship" value="0" min="0" step="0.5" oninput="recalc()"></div>
+        <div class="field" style="margin-bottom:0;"><label>Other overhead (<span class="csym">AED</span>)</label><input type="number" id="other" value="0" min="0" step="0.5" oninput="recalc()"></div>
+      </div>
+    </div>
+
+    <!-- TAB: PRICING -->
+    <div id="tab-price" style="display:none;">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon ci-plum">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="card-label">Set Your Price</div>
+        </div>
+        <div class="field">
+          <label>Units per batch</label>
+          <input type="number" id="qty" value="1" min="1" step="1" oninput="recalc()">
+        </div>
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <label>Profit margin target</label>
+            <div class="slider-val" id="mgLabel">40%</div>
+          </div>
+          <input type="range" id="mgSlider" min="0" max="80" value="40" step="1" oninput="onMargin(this.value)">
+          <div class="slider-hints"><span>0% break-even</span><span>40% standard</span><span>80% premium</span></div>
+        </div>
+      </div>
+
+      <!-- Hero price -->
+      <div class="price-hero" id="priceHero">
+        <div class="ph-label">Suggested selling price</div>
+        <div class="ph-price"><span class="ph-cur" id="heroSym">AED</span> <span id="heroPrice">0.00</span></div>
+        <div class="ph-note" id="heroNote">per piece · 0% margin</div>
+      </div>
+
+      <!-- Stat grid -->
+      <div class="stat-grid">
+        <div class="stat-tile st-terra">
+          <div class="t-label">Total batch cost</div>
+          <div class="t-val" id="batchCostVal">0.00</div>
+        </div>
+        <div class="stat-tile st-sun">
+          <div class="t-label">Cost / piece</div>
+          <div class="t-val" id="cppVal">0.00</div>
+        </div>
+        <div class="stat-tile st-sage">
+          <div class="t-label">Net profit / piece</div>
+          <div class="t-val" id="profitVal">0.00</div>
+        </div>
+        <div class="stat-tile st-sky">
+          <div class="t-label">Actual margin</div>
+          <div class="t-val" id="marginVal">0%</div>
+        </div>
+      </div>
+
+      <!-- Breakdown -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon ci-terra">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="card-label">Cost breakdown</div>
+        </div>
+        <div id="breakdown"></div>
+      </div>
+
+      <div class="btn-row no-print">
+        <button class="btn btn-terra" onclick="saveProd()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save to my products
+        </button>
+        <button class="btn btn-sage" onclick="doPrint()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Download pricing sheet
+        </button>
+        <button class="btn btn-danger" onclick="doReset()">Reset calculator</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PRODUCTS PAGE ══ -->
+  <div class="page" id="pg-prods">
+    <div class="page-head">
+      <div class="page-title">My <span>Products</span></div>
+      <div class="page-sub">Saved locally in your browser</div>
+    </div>
+    <div class="notice">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Data lives in this browser only. Use Settings → Backup to download a copy.
+    </div>
+    <div id="savedList"></div>
+  </div>
+
+  <!-- ══ SETTINGS PAGE ══ -->
+  <div class="page" id="pg-set">
+    <div class="page-head">
+      <div class="page-title">Set<span>tings</span></div>
+      <div class="page-sub">Preferences &amp; data backup</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon ci-sun">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </div>
+        <div class="card-label">Display</div>
+      </div>
+      <div class="setting-item">
+        <div class="si-text">
+          <div class="si-label">Currency</div>
+          <div class="si-meta">Shown across all calculations</div>
+        </div>
+        <select class="currency-pill" style="background:var(--terra-bg);border-color:#FFBAA5;color:var(--terra);font-weight:700;font-size:13px;padding:6px 12px;border-radius:20px;font-family:'Nunito',sans-serif;outline:none;" onchange="setCurrency(this.value);document.getElementById('curSelect').value=this.value">
+          <option>AED</option><option>PHP</option><option>USD</option>
+          <option>GBP</option><option>EUR</option><option>SGD</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon ci-sage">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="card-label">Your data</div>
+      </div>
+      <div class="notice" style="margin-bottom:12px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Products are saved in this browser only. Download a backup before clearing browser data or switching devices.
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-sage" onclick="doExport()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Backup my data (.json)
+        </button>
+        <label class="btn btn-outline" style="cursor:pointer;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Restore from backup
+          <input type="file" accept=".json" onchange="doImport(event)" style="display:none">
+        </label>
+        <button class="btn btn-danger" onclick="doClear()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          Clear all saved products
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon ci-terra">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="card-label">About</div>
+      </div>
+      <div class="setting-item">
+        <div class="si-text"><div class="si-label">Stitch &amp; Sell</div><div class="si-meta">Leather cost &amp; profit calculator · v1.0</div></div>
+        <span class="badge badge-terra">Free</span>
+      </div>
+      <div class="setting-item">
+        <div class="si-text"><div class="si-label">Data privacy</div><div class="si-meta">Nothing uploaded — browser only</div></div>
+        <span class="badge badge-sage">Private</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav>
+  <button class="nav-btn active" id="nb-calc" onclick="showPage('calc')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+    Calculator
+  </button>
+  <button class="nav-btn" id="nb-prods" onclick="showPage('prods')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    Products
+  </button>
+  <button class="nav-btn" id="nb-set" onclick="showPage('set')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M6.34 17.66l-1.41 1.41M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M12 2v2M12 20v2"/></svg>
+    Settings
+  </button>
+</nav>
+
+</div>
+
+<script>
+// ── STATE ──
+let currency = localStorage.getItem('ss_cur') || 'AED';
+let saved = JSON.parse(localStorage.getItem('ss_prods') || '[]');
+let selProd = '';
+let matN = 0, hwN = 0;
+
+// ── PRODUCTS ──
+const PRODS = [
+  {id:'belt',       em:'🪢', label:'Belt'},
+  {id:'wallet',     em:'👛', label:'Wallet'},
+  {id:'card',       em:'💳', label:'Card Holder'},
+  {id:'passport',   em:'📔', label:'Passport Holder'},
+  {id:'laptop',     em:'💻', label:'Laptop Sleeve'},
+  {id:'earrings',   em:'💎', label:'Earrings'},
+  {id:'knife-roll', em:'🔪', label:'Knife Roll'},
+  {id:'apron',      em:'🧴', label:'Apron'},
+  {id:'collar',     em:'🐾', label:'Pet Collar'},
+  {id:'name-tag',   em:'🏷️', label:'Name Tag'},
+  {id:'keychain',   em:'🔑', label:'Keychain'},
+  {id:'custom',     em:'✨', label:'Custom'},
+];
+
+function init() {
+  buildProdGrid();
+  addMat(); addHw();
+  setCurrency(currency);
+  document.getElementById('curSelect').value = currency;
+  onMargin(40);
+  recalc();
+  renderSaved();
+}
+
+function buildProdGrid() {
+  document.getElementById('prodGrid').innerHTML = PRODS.map(p => `
+    <div class="product-chip ${selProd===p.id?'selected':''}" onclick="pickProd('${p.id}')">
+      <div class="chip-icon">${p.em}</div>
+      <div class="chip-label">${p.label}</div>
+    </div>`).join('');
+}
+
+function pickProd(id) {
+  selProd = id;
+  buildProdGrid();
+  const p = PRODS.find(x=>x.id===id);
+  const n = document.getElementById('prodName');
+  if (p && id!=='custom' && !n.value) n.value = p.label;
+}
+
+// ── TABS ──
+const TABS = ['mat','labor','over','price'];
+function goTab(t) {
+  TABS.forEach(x => document.getElementById('tab-'+x).style.display = x===t ? 'block' : 'none');
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', TABS[i]===t));
+  recalc();
+}
+
+// ── INGREDIENT ROWS ──
+function mkIng(containerId, placeholder) {
+  const id = containerId+'_'+( containerId==='matRows' ? matN++ : hwN++ );
+  const d = document.createElement('div');
+  d.className = 'ing-row';
+  d.id = id;
+  d.innerHTML = `
+    <input type="text" placeholder="${placeholder}" autocomplete="off">
+    <input type="number" placeholder="1" min="0" step="0.1" value="1" oninput="recalc()">
+    <input type="number" placeholder="0.00" min="0" step="0.5" oninput="recalc()">
+    <button class="del-btn" onclick="rmRow('${id}')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>`;
+  document.getElementById(containerId).appendChild(d);
+}
+
+function addMat() { mkIng('matRows','Veg-tan leather, hide...'); }
+function addHw()  { mkIng('hwRows', 'Rivets, thread, dye, buckle...'); }
+function rmRow(id){ const el=document.getElementById(id); if(el)el.remove(); recalc(); }
+
+function rowsTotal(cid) {
+  let t=0;
+  document.querySelectorAll('#'+cid+' .ing-row').forEach(r=>{
+    const ins = r.querySelectorAll('input[type="number"]');
+    t += (parseFloat(ins[0]?.value)||0) * (parseFloat(ins[1]?.value)||0);
+  });
+  return t;
+}
+
+// ── CALCULATE ──
+function recalc() {
+  const mat   = rowsTotal('matRows');
+  const hw    = rowsTotal('hwRows');
+  const rate  = parseFloat(document.getElementById('rate')?.value)||0;
+  const mins  = parseFloat(document.getElementById('mins')?.value)||0;
+  const labor = (rate/60)*mins;
+  const pkg   = parseFloat(document.getElementById('pkg')?.value)||0;
+  const tools = parseFloat(document.getElementById('tools')?.value)||0;
+  const rent  = parseFloat(document.getElementById('rent')?.value)||0;
+  const ship  = parseFloat(document.getElementById('ship')?.value)||0;
+  const other = parseFloat(document.getElementById('other')?.value)||0;
+  const over  = pkg+tools+rent+ship+other;
+  const qty   = parseInt(document.getElementById('qty')?.value)||1;
+  const mg    = parseInt(document.getElementById('mgSlider')?.value)||0;
+
+  const batchCost = mat+hw+labor+over;
+  const cpp = batchCost/qty;
+  const sell = mg<100 ? cpp/(1-mg/100) : cpp*2;
+  const profit = sell-cpp;
+  const actMg = sell>0 ? (profit/sell*100) : 0;
+  const sym = currency;
+  const f = v => v.toFixed(2);
+
+  // labor display
+  const lv = document.getElementById('laborVal');
+  if(lv) lv.textContent = sym+' '+f(labor);
+
+  // hero
+  const hp = document.getElementById('heroPrice');
+  if(hp) hp.textContent = f(sell);
+  const hs = document.getElementById('heroSym');
+  if(hs) hs.textContent = sym;
+  const hn = document.getElementById('heroNote');
+  if(hn) hn.textContent = `per piece · ${actMg.toFixed(1)}% margin`;
+
+  // tiles
+  const set = (id,v)=>{ const el=document.getElementById(id); if(el)el.textContent=v; };
+  set('batchCostVal', f(batchCost));
+  set('cppVal', f(cpp));
+  set('profitVal', f(profit));
+  set('marginVal', actMg.toFixed(1)+'%');
+
+  // breakdown
+  const bd = document.getElementById('breakdown');
+  if(bd) bd.innerHTML = `
+    <div class="breakdown-item"><span class="bi-label"><span class="bi-dot" style="background:var(--terra)"></span>Raw materials</span><span class="bi-amount">${sym} ${f(mat)}</span></div>
+    <div class="breakdown-item"><span class="bi-label"><span class="bi-dot" style="background:#C8861A"></span>Hardware &amp; supplies</span><span class="bi-amount">${sym} ${f(hw)}</span></div>
+    <div class="breakdown-item"><span class="bi-label"><span class="bi-dot" style="background:var(--sage)"></span>Labor (${mins} min)</span><span class="bi-amount">${sym} ${f(labor)}</span></div>
+    <div class="breakdown-item"><span class="bi-label"><span class="bi-dot" style="background:var(--sky)"></span>Overhead</span><span class="bi-amount">${sym} ${f(over)}</span></div>
+    <div class="breakdown-item total"><span class="bi-label"><span class="bi-dot" style="background:var(--ink)"></span>Cost per piece</span><span class="bi-amount">${sym} ${f(cpp)}</span></div>`;
+
+  // slider gradient
+  const sl = document.getElementById('mgSlider');
+  if(sl) sl.style.setProperty('--pct', mg+'%');
+}
+
+function onMargin(v) {
+  document.getElementById('mgLabel').textContent = v+'%';
+  recalc();
+}
+
+// ── CURRENCY ──
+function setCurrency(c) {
+  currency = c;
+  localStorage.setItem('ss_cur', c);
+  document.querySelectorAll('.csym').forEach(el=>el.textContent=c);
+  document.getElementById('curSelect').value = c;
+  recalc();
+}
+
+// ── NAV ──
+function showPage(p) {
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('pg-'+p).classList.add('active');
+  document.getElementById('nb-'+p).classList.add('active');
+  if(p==='prods') renderSaved();
+}
+
+// ── SAVE / RENDER ──
+function saveProd() {
+  const rate = parseFloat(document.getElementById('rate').value)||0;
+  const mins = parseFloat(document.getElementById('mins').value)||0;
+  const labor = (rate/60)*mins;
+  const mat  = rowsTotal('matRows');
+  const hw   = rowsTotal('hwRows');
+  const over = (parseFloat(document.getElementById('pkg').value)||0)
+             + (parseFloat(document.getElementById('tools').value)||0)
+             + (parseFloat(document.getElementById('rent').value)||0)
+             + (parseFloat(document.getElementById('ship').value)||0)
+             + (parseFloat(document.getElementById('other').value)||0);
+  const qty  = parseInt(document.getElementById('qty').value)||1;
+  const mg   = parseInt(document.getElementById('mgSlider').value)||0;
+  const batch = mat+hw+labor+over;
+  const cpp  = batch/qty;
+  const sell = mg<100 ? cpp/(1-mg/100) : cpp*2;
+  const profit= sell-cpp;
+  const name = document.getElementById('prodName').value.trim() || selProd || 'Unnamed';
+  const em   = PRODS.find(x=>x.id===selProd)?.em || '✨';
+
+  saved.unshift({
+    id: Date.now(), name, em, currency,
+    sell: sell.toFixed(2), cpp: cpp.toFixed(2),
+    profit: profit.toFixed(2), mg, qty,
+    date: new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}),
+  });
+  localStorage.setItem('ss_prods', JSON.stringify(saved));
+  toast('Saved: '+name);
+  renderSaved();
+}
+
+function renderSaved() {
+  const el = document.getElementById('savedList');
+  if(!saved.length) {
+    el.innerHTML = `<div class="empty">
+      <div class="empty-icon">🧵</div>
+      <div class="empty-title">Nothing saved yet</div>
+      <p>Calculate a product's cost and tap<br>"Save to my products" to see it here.</p>
+    </div>`;
+    return;
+  }
+  el.innerHTML = saved.map(p=>`
+    <div class="prod-card">
+      <div class="prod-emoji">${p.em}</div>
+      <div class="prod-info">
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-meta">${p.currency} · ${p.qty} pc · ${p.date}</div>
+      </div>
+      <div class="prod-price">
+        <div class="prod-sell">${p.sell}</div>
+        <div class="prod-margin">${p.mg}% margin</div>
+      </div>
+      <button class="del-btn" onclick="delProd(${p.id})">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>`).join('');
+}
+
+function delProd(id) {
+  saved = saved.filter(p=>p.id!==id);
+  localStorage.setItem('ss_prods', JSON.stringify(saved));
+  renderSaved();
+}
+
+function doReset() {
+  if(!confirm('Reset all calculator inputs?')) return;
+  ['rate','mins','pkg','tools','rent','ship','other'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=id==='rate'?25:id==='mins'?60:0; });
+  document.getElementById('prodName').value='';
+  document.getElementById('qty').value=1;
+  document.getElementById('mgSlider').value=40;
+  onMargin(40);
+  document.getElementById('matRows').innerHTML='';
+  document.getElementById('hwRows').innerHTML='';
+  selProd=''; buildProdGrid();
+  addMat(); addHw();
+  recalc();
+}
+
+// ── PRINT ──
+function doPrint() {
+  goTab('price');
+  const sym = currency;
+  const name = document.getElementById('prodName').value || 'Leather Product';
+  const sell = document.getElementById('heroPrice').textContent;
+  const bc   = document.getElementById('batchCostVal').textContent;
+  const cpp  = document.getElementById('cppVal').textContent;
+  const prof = document.getElementById('profitVal').textContent;
+  const mg   = document.getElementById('mgLabel').textContent;
+  const qty  = document.getElementById('qty').value;
+  const date = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'});
+  const em   = PRODS.find(x=>x.id===selProd)?.em||'✨';
+
+  const w = window.open('','_blank','width=640,height=900');
+  w.document.write(`<!DOCTYPE html><html><head>
+  <meta charset="UTF-8"><title>${name} — Pricing Sheet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Nunito',sans-serif;background:#fff;color:#1E1208;padding:44px 52px;max-width:640px;margin:auto}
+    .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid #E8DDD4}
+    .brand{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#E8532A}
+    .brand small{display:block;font-size:10px;font-family:'Nunito',sans-serif;font-weight:600;color:#A89F97;letter-spacing:0.14em;text-transform:uppercase;margin-top:3px}
+    .date{font-size:11px;color:#A89F97;font-weight:600}
+    .prod-name{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#1E1208;margin-bottom:4px}
+    .prod-type{font-size:13px;color:#6B6059;font-weight:600;margin-bottom:28px}
+    .hero{background:linear-gradient(135deg,#E8532A,#C8391A);border-radius:14px;padding:22px 24px;text-align:center;margin-bottom:24px}
+    .h-label{font-size:11px;font-weight:700;color:rgba(255,255,255,0.75);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:6px}
+    .h-price{font-family:'Syne',sans-serif;font-size:46px;font-weight:800;color:#fff}
+    .h-note{font-size:11px;color:rgba(255,255,255,0.65);font-weight:600;margin-top:4px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+    .tile{border:1.5px solid #E8DDD4;border-radius:10px;padding:14px}
+    .t-lbl{font-size:10px;font-weight:700;color:#A89F97;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px}
+    .t-val{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#1E1208}
+    .t-val.accent{color:#E8532A}
+    .t-val.green{color:#5B8C5A}
+    table{width:100%;border-collapse:collapse}
+    tr{border-bottom:1px solid #F5EDE3}
+    td{padding:9px 0;font-size:13px;font-weight:600;color:#1E1208}
+    td:last-child{text-align:right}
+    td.muted{color:#A89F97}
+    .footer{margin-top:36px;padding-top:16px;border-top:1px solid #E8DDD4;font-size:10px;color:#A89F97;font-weight:600;letter-spacing:0.04em}
+    @media print{body{padding:24px}button{display:none}}
+  </style></head><body>
+  <div class="top">
+    <div class="brand">Stitch &amp; Sell<small>Leather Cost Calculator</small></div>
+    <div class="date">Generated ${date}</div>
+  </div>
+  <div style="font-size:36px;margin-bottom:6px">${em}</div>
+  <div class="prod-name">${name}</div>
+  <div class="prod-type">Batch: ${qty} piece(s) · ${sym} · ${mg} margin target</div>
+  <div class="hero">
+    <div class="h-label">Suggested selling price</div>
+    <div class="h-price">${sym} ${sell}</div>
+    <div class="h-note">per piece</div>
+  </div>
+  <div class="grid">
+    <div class="tile"><div class="t-lbl">Total batch cost</div><div class="t-val">${sym} ${bc}</div></div>
+    <div class="tile"><div class="t-lbl">Cost per piece</div><div class="t-val accent">${sym} ${cpp}</div></div>
+    <div class="tile"><div class="t-lbl">Net profit / piece</div><div class="t-val green">${sym} ${prof}</div></div>
+    <div class="tile"><div class="t-lbl">Profit margin</div><div class="t-val green">${mg}</div></div>
+  </div>
+  <div class="footer">Generated by Stitch &amp; Sell — free leather pricing calculator · Your data was never uploaded.</div>
+  <script>window.onload=()=>window.print()<\/script>
+  </body></html>`);
+  w.document.close();
+}
+
+// ── BACKUP / RESTORE ──
+function doExport() {
+  const blob = new Blob([JSON.stringify({ss_prods:saved,currency,exported:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'stitch-sell-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+}
+
+function doImport(e) {
+  const file=e.target.files[0]; if(!file)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(d.ss_prods){ saved=d.ss_prods; localStorage.setItem('ss_prods',JSON.stringify(saved)); }
+      if(d.currency) setCurrency(d.currency);
+      renderSaved(); toast('Restored '+saved.length+' products');
+    }catch{ toast('Invalid backup file'); }
+  };
+  r.readAsText(file);
+}
+
+function doClear() {
+  if(!confirm('Delete all '+saved.length+' saved products?')) return;
+  saved=[]; localStorage.removeItem('ss_prods'); renderSaved(); toast('Cleared');
+}
+
+// ── TOAST ──
+function toast(msg) {
+  const t=document.createElement('div'); t.className='toast'; t.textContent=msg;
+  document.body.appendChild(t); setTimeout(()=>t.remove(),2400);
+}
+
+init();
+</script>
+</body>
+</html>
