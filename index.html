@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Stitch & Sell — Leather Pricing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
   --white:    #FFFBF5;
@@ -39,10 +39,13 @@
 body {
   background: var(--cream);
   color: var(--ink);
-  font-family: 'Nunito', sans-serif;
-  font-size: 14px;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Subtle dot pattern bg */
@@ -80,24 +83,24 @@ header {
 }
 
 .logo {
-  font-family: 'Syne', sans-serif;
-  font-size: 20px;
-  font-weight: 800;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: clamp(20px, 5vw, 24px);
+  font-weight: 900;
   color: #fff;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.03em;
   line-height: 1;
 }
 
 .logo em {
   display: block;
   font-style: normal;
-  font-size: 9px;
-  font-family: 'Nunito', sans-serif;
+  font-size: 10px;
+  font-family: Inter, system-ui, sans-serif;
   font-weight: 600;
-  color: rgba(255,255,255,0.7);
-  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.72);
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .currency-pill {
@@ -114,7 +117,7 @@ header {
   background: none;
   border: none;
   color: #fff;
-  font-family: 'Nunito', sans-serif;
+  font-family: Inter, system-ui, sans-serif;
   font-size: 13px;
   font-weight: 700;
   outline: none;
@@ -153,10 +156,10 @@ nav {
   border: none;
   color: var(--gray-lt);
   cursor: pointer;
-  font-family: 'Nunito', sans-serif;
-  font-size: 10px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.01em;
   transition: color 0.2s;
   position: relative;
 }
@@ -179,7 +182,7 @@ nav {
 /* ── MAIN ── */
 main {
   flex: 1;
-  padding: 16px 14px 90px;
+  padding: 20px 16px 100px;
 }
 
 .page { display: none; }
@@ -191,24 +194,25 @@ main {
 }
 
 /* ── PAGE TITLE ── */
-.page-head { margin-bottom: 18px; }
+.page-head { margin-bottom: 22px; }
 
 .page-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 26px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: clamp(26px, 7vw, 32px);
   font-weight: 800;
   color: var(--ink);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   line-height: 1.1;
 }
 
 .page-title span { color: var(--terra); }
 
 .page-sub {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--gray);
   font-weight: 500;
-  margin-top: 3px;
+  line-height: 1.5;
+  margin-top: 4px;
 }
 
 /* ── CARDS ── */
@@ -216,29 +220,29 @@ main {
   background: #fff;
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 12px;
+  padding: 18px 18px 16px;
+  margin-bottom: 14px;
   box-shadow: var(--shadow);
 }
 
 .card-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 14px;
+  gap: 10px;
+  margin-bottom: 16px;
 }
 
 .card-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.card-icon svg { width: 17px; height: 17px; }
+.card-icon svg { width: 18px; height: 18px; }
 
 .ci-terra { background: var(--terra-bg); color: var(--terra); }
 .ci-sun   { background: var(--sun-bg);   color: #C8861A; }
@@ -247,29 +251,31 @@ main {
 .ci-plum  { background: var(--plum-bg);  color: var(--plum); }
 
 .card-label {
-  font-family: 'Syne', sans-serif;
-  font-size: 14px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 17px;
   font-weight: 700;
   color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
 /* ── PRODUCT GRID ── */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 7px;
-  margin-bottom: 14px;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 .product-chip {
   background: var(--cream);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: 9px 4px 8px;
+  padding: 10px 4px 9px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   cursor: pointer;
   transition: all 0.18s;
   text-align: center;
@@ -283,14 +289,14 @@ main {
 }
 
 .chip-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
   background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 17px;
   border: 1px solid var(--border);
   transition: all 0.18s;
 }
@@ -301,28 +307,28 @@ main {
 }
 
 .chip-label {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   color: var(--gray);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  line-height: 1.2;
+  line-height: 1.25;
   transition: color 0.18s;
 }
 
 .product-chip.selected .chip-label { color: var(--terra); }
 
 /* ── FORM ELEMENTS ── */
-.field { margin-bottom: 10px; }
+.field { margin-bottom: 14px; }
 
 .field label {
   display: block;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--gray);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: 650;
+  color: #1f2a44;
+  letter-spacing: 0.01em;
+  margin-bottom: 6px;
+  line-height: 1.4;
 }
 
 .field input,
@@ -332,11 +338,12 @@ main {
   border: 1.5px solid var(--border);
   border-radius: var(--radius-xs);
   color: var(--ink);
-  font-family: 'Nunito', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 9px 12px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 11px 13px;
   outline: none;
+  line-height: 1.4;
   transition: border-color 0.18s, background 0.18s;
   -webkit-appearance: none;
 }
@@ -345,31 +352,31 @@ main {
 .field select option { background: #fff; }
 .field input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
 
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
 /* ── INGREDIENT ROWS ── */
 .ing-header {
   display: grid;
-  grid-template-columns: 2fr 0.7fr 1fr 28px;
+  grid-template-columns: 2fr 0.7fr 1fr 32px;
   gap: 6px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   padding: 0 2px;
 }
 
 .ing-header span {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--gray-lt);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
 }
 
 .ing-row {
   display: grid;
-  grid-template-columns: 2fr 0.7fr 1fr 28px;
+  grid-template-columns: 2fr 0.7fr 1fr 32px;
   gap: 6px;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 7px;
 }
 
 .ing-row input, .ing-row select {
@@ -378,11 +385,12 @@ main {
   border: 1.5px solid var(--border);
   border-radius: var(--radius-xs);
   color: var(--ink);
-  font-family: 'Nunito', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 7px 8px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 9px;
   outline: none;
+  line-height: 1.4;
   transition: border-color 0.18s;
   -webkit-appearance: none;
 }
@@ -390,8 +398,8 @@ main {
 .ing-row input:focus { border-color: var(--terra); background: #fff; }
 
 .del-btn {
-  width: 28px;
-  height: 32px;
+  width: 32px;
+  height: 36px;
   background: #FFF0EB;
   border: 1.5px solid #FFCFBF;
   border-radius: var(--radius-xs);
@@ -415,10 +423,10 @@ main {
   border: 1.5px dashed var(--terra-lt);
   border-radius: var(--radius-xs);
   color: var(--terra);
-  font-family: 'Nunito', sans-serif;
-  font-size: 12px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 13px;
   font-weight: 700;
-  padding: 8px;
+  padding: 10px;
   cursor: pointer;
   width: 100%;
   margin-top: 4px;
@@ -433,22 +441,22 @@ main {
   background: #fff;
   border: 1.5px solid var(--border);
   border-radius: 30px;
-  padding: 3px;
-  margin-bottom: 14px;
+  padding: 4px;
+  margin-bottom: 16px;
   gap: 2px;
 }
 
 .tab-btn {
   flex: 1;
-  padding: 8px 4px;
+  padding: 9px 4px;
   background: none;
   border: none;
   border-radius: 26px;
   color: var(--gray);
-  font-family: 'Nunito', sans-serif;
-  font-size: 11px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -466,27 +474,27 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .slider-row label {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--gray);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 650;
+  color: #1f2a44;
+  letter-spacing: 0.01em;
 }
 
 .slider-val {
   background: var(--terra);
   color: #fff;
-  font-family: 'Syne', sans-serif;
+  font-family: Inter, system-ui, sans-serif;
   font-size: 15px;
-  font-weight: 700;
-  padding: 3px 12px;
+  font-weight: 800;
+  padding: 4px 14px;
   border-radius: 20px;
-  min-width: 56px;
+  min-width: 58px;
   text-align: center;
+  letter-spacing: -0.02em;
 }
 
 input[type="range"] {
@@ -512,23 +520,24 @@ input[type="range"]::-webkit-slider-thumb {
 .slider-hints {
   display: flex;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--gray-lt);
-  font-weight: 600;
-  margin-top: 5px;
+  font-weight: 500;
+  margin-top: 6px;
+  line-height: 1.4;
 }
 
 /* ── STAT TILES ── */
 .stat-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .stat-tile {
   border-radius: var(--radius-sm);
-  padding: 13px 14px;
+  padding: 15px 16px;
   position: relative;
   overflow: hidden;
 }
@@ -538,8 +547,8 @@ input[type="range"]::-webkit-slider-thumb {
   position: absolute;
   top: -12px;
   right: -12px;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: rgba(255,255,255,0.18);
 }
@@ -550,19 +559,21 @@ input[type="range"]::-webkit-slider-thumb {
 .st-sky   { background: var(--sky);   color: #fff; }
 
 .stat-tile .t-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   opacity: 0.8;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  line-height: 1.4;
 }
 
 .stat-tile .t-val {
-  font-family: 'Syne', sans-serif;
-  font-size: 24px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: clamp(22px, 5vw, 28px);
   font-weight: 800;
   line-height: 1;
+  letter-spacing: -0.03em;
 }
 
 /* ── HERO PRICE ── */
@@ -596,34 +607,35 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .price-hero .ph-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  color: rgba(255,255,255,0.75);
-  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.78);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .price-hero .ph-price {
-  font-family: 'Syne', sans-serif;
-  font-size: 48px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: clamp(40px, 10vw, 52px);
   font-weight: 800;
   color: #fff;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
   line-height: 1;
 }
 
 .price-hero .ph-cur {
-  font-size: 22px;
+  font-size: clamp(18px, 4vw, 22px);
   vertical-align: super;
   font-weight: 700;
 }
 
 .price-hero .ph-note {
-  font-size: 11px;
-  color: rgba(255,255,255,0.65);
-  margin-top: 6px;
-  font-weight: 600;
+  font-size: 13px;
+  color: rgba(255,255,255,0.68);
+  margin-top: 8px;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 /* ── BREAKDOWN ── */
@@ -631,7 +643,7 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 9px 0;
+  padding: 11px 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -640,10 +652,11 @@ input[type="range"]::-webkit-slider-thumb {
 .bi-label {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
+  gap: 9px;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--gray);
+  line-height: 1.4;
 }
 
 .bi-dot {
@@ -654,14 +667,15 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .bi-amount {
-  font-family: 'Syne', sans-serif;
+  font-family: Inter, system-ui, sans-serif;
   font-size: 14px;
   font-weight: 700;
   color: var(--ink);
+  letter-spacing: -0.01em;
 }
 
-.breakdown-item.total .bi-label { color: var(--ink); font-weight: 700; font-size: 14px; }
-.breakdown-item.total .bi-amount { color: var(--terra); font-size: 16px; }
+.breakdown-item.total .bi-label { color: var(--ink); font-weight: 700; font-size: 15px; }
+.breakdown-item.total .bi-amount { color: var(--terra); font-size: 17px; letter-spacing: -0.02em; }
 
 /* ── BUTTONS ── */
 .btn {
@@ -669,16 +683,17 @@ input[type="range"]::-webkit-slider-thumb {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 13px 20px;
+  padding: 14px 20px;
   border-radius: var(--radius-sm);
   border: none;
-  font-family: 'Nunito', sans-serif;
-  font-size: 14px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.18s;
   width: 100%;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
 .btn:active { transform: scale(0.97); }
@@ -701,41 +716,41 @@ input[type="range"]::-webkit-slider-thumb {
   background: #FFF0EB;
   border: 1.5px solid #FFCFBF;
   color: var(--terra);
-  font-size: 13px;
-  padding: 10px;
+  font-size: 14px;
+  padding: 12px;
 }
 
-.btn-sm { padding: 8px 14px; font-size: 12px; width: auto; }
-.btn-row { display: flex; flex-direction: column; gap: 8px; }
+.btn-sm { padding: 9px 16px; font-size: 13px; width: auto; }
+.btn-row { display: flex; flex-direction: column; gap: 9px; }
 
 /* ── NOTICE ── */
 .notice {
   background: var(--sun-bg);
   border: 1.5px solid #F4D98A;
   border-radius: var(--radius-sm);
-  padding: 10px 12px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 500;
   color: #7A5C00;
-  line-height: 1.5;
-  margin-bottom: 12px;
+  line-height: 1.55;
+  margin-bottom: 14px;
   display: flex;
-  gap: 8px;
+  gap: 10px;
   align-items: flex-start;
 }
 
-.notice svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px; color: #C8861A; }
+.notice svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; color: #C8861A; }
 
 /* ── SAVED PRODUCTS ── */
 .prod-card {
   background: #fff;
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px 16px;
+  padding: 15px 16px;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 13px;
   box-shadow: var(--shadow);
   transition: box-shadow 0.18s;
 }
@@ -743,71 +758,74 @@ input[type="range"]::-webkit-slider-thumb {
 .prod-card:active { box-shadow: none; }
 
 .prod-emoji {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: var(--radius-sm);
   background: var(--terra-bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 23px;
   flex-shrink: 0;
 }
 
 .prod-info { flex: 1; min-width: 0; }
 
 .prod-name {
-  font-family: 'Syne', sans-serif;
+  font-family: Inter, system-ui, sans-serif;
   font-size: 15px;
   font-weight: 700;
   color: var(--ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  letter-spacing: -0.01em;
 }
 
-.prod-meta { font-size: 11px; font-weight: 600; color: var(--gray-lt); margin-top: 2px; }
+.prod-meta { font-size: 12px; font-weight: 500; color: var(--gray-lt); margin-top: 3px; line-height: 1.4; }
 
 .prod-price { text-align: right; flex-shrink: 0; }
 
 .prod-sell {
-  font-family: 'Syne', sans-serif;
-  font-size: 18px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 19px;
   font-weight: 800;
   color: var(--terra);
   line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .prod-margin {
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 600;
   color: var(--sage);
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 /* ── EMPTY STATE ── */
 .empty {
   text-align: center;
-  padding: 52px 24px;
+  padding: 56px 24px;
 }
 
 .empty-icon {
-  font-size: 52px;
-  margin-bottom: 12px;
+  font-size: 54px;
+  margin-bottom: 14px;
 }
 
 .empty-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 18px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 20px;
   font-weight: 700;
   color: var(--ink);
-  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
 }
 
 .empty p {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--gray);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.6;
 }
 
@@ -816,23 +834,23 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 13px 0;
+  padding: 14px 0;
   border-bottom: 1px solid var(--border);
 }
 
 .setting-item:last-child { border-bottom: none; }
 
 .si-text { }
-.si-label { font-size: 14px; font-weight: 700; color: var(--ink); }
-.si-meta  { font-size: 11px; color: var(--gray-lt); font-weight: 600; margin-top: 2px; }
+.si-label { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+.si-meta  { font-size: 13px; color: var(--gray-lt); font-weight: 400; margin-top: 3px; line-height: 1.4; }
 
 .badge {
   display: inline-block;
-  padding: 4px 12px;
+  padding: 5px 13px;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.01em;
 }
 
 .badge-terra { background: var(--terra-bg); color: var(--terra); }
@@ -844,33 +862,34 @@ input[type="range"]::-webkit-slider-thumb {
   background: var(--sky-bg);
   border: 1.5px solid #BAD9F2;
   border-radius: var(--radius-sm);
-  padding: 11px 13px;
+  padding: 12px 14px;
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
-.labor-info svg { width: 16px; height: 16px; color: var(--sky); flex-shrink: 0; margin-top: 1px; }
-.labor-info p { font-size: 12px; font-weight: 600; color: #1E5080; line-height: 1.5; }
+.labor-info svg { width: 16px; height: 16px; color: var(--sky); flex-shrink: 0; margin-top: 2px; }
+.labor-info p { font-size: 13px; font-weight: 400; color: #1E5080; line-height: 1.55; }
 
 /* ── TOAST ── */
 .toast {
   position: fixed;
-  bottom: 80px;
+  bottom: 88px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--ink);
   color: #fff;
-  padding: 11px 22px;
+  padding: 12px 24px;
   border-radius: 30px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
   z-index: 999;
   white-space: nowrap;
   box-shadow: 0 6px 24px rgba(30,18,8,0.25);
   animation: toastIn 0.25s ease;
+  letter-spacing: -0.01em;
 }
 
 @keyframes toastIn {
@@ -998,7 +1017,7 @@ input[type="range"]::-webkit-slider-thumb {
         </div>
         <div class="stat-tile st-sage" style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
           <span class="t-label" style="margin:0;">Labor cost</span>
-          <span id="laborVal" style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;">AED 0.00</span>
+          <span id="laborVal" style="font-family:Inter,system-ui,sans-serif;font-size:24px;font-weight:800;color:#fff;letter-spacing:-0.03em;">AED 0.00</span>
         </div>
         <div class="labor-info">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -1131,7 +1150,7 @@ input[type="range"]::-webkit-slider-thumb {
           <div class="si-label">Currency</div>
           <div class="si-meta">Shown across all calculations</div>
         </div>
-        <select class="currency-pill" style="background:var(--terra-bg);border-color:#FFBAA5;color:var(--terra);font-weight:700;font-size:13px;padding:6px 12px;border-radius:20px;font-family:'Nunito',sans-serif;outline:none;" onchange="setCurrency(this.value);document.getElementById('curSelect').value=this.value">
+        <select class="currency-pill" style="background:var(--terra-bg);border-color:#FFBAA5;color:var(--terra);font-weight:700;font-size:13px;padding:6px 12px;border-radius:20px;font-family:Inter,system-ui,sans-serif;outline:none;" onchange="setCurrency(this.value);document.getElementById('curSelect').value=this.value">
           <option>AED</option><option>PHP</option><option>USD</option>
           <option>GBP</option><option>EUR</option><option>SGD</option>
         </select>
@@ -1466,39 +1485,34 @@ function doPrint() {
   const w = window.open('','_blank','width=640,height=900');
   w.document.write(`<!DOCTYPE html><html><head>
   <meta charset="UTF-8"><title>${name} — Pricing Sheet</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Nunito',sans-serif;background:#fff;color:#1E1208;padding:44px 52px;max-width:640px;margin:auto}
+    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:#fff;color:#1E1208;padding:44px 52px;max-width:640px;margin:auto;-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.55}
     .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid #E8DDD4}
-    .brand{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#E8532A}
-    .brand small{display:block;font-size:10px;font-family:'Nunito',sans-serif;font-weight:600;color:#A89F97;letter-spacing:0.14em;text-transform:uppercase;margin-top:3px}
-    .date{font-size:11px;color:#A89F97;font-weight:600}
-    .prod-name{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#1E1208;margin-bottom:4px}
-    .prod-type{font-size:13px;color:#6B6059;font-weight:600;margin-bottom:28px}
-    .hero{background:linear-gradient(135deg,#E8532A,#C8391A);border-radius:14px;padding:22px 24px;text-align:center;margin-bottom:24px}
-    .h-label{font-size:11px;font-weight:700;color:rgba(255,255,255,0.75);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:6px}
-    .h-price{font-family:'Syne',sans-serif;font-size:46px;font-weight:800;color:#fff}
-    .h-note{font-size:11px;color:rgba(255,255,255,0.65);font-weight:600;margin-top:4px}
+    .brand{font-size:22px;font-weight:900;color:#E8532A;letter-spacing:-0.03em}
+    .brand small{display:block;font-size:11px;font-weight:600;color:#A89F97;letter-spacing:0.12em;text-transform:uppercase;margin-top:3px}
+    .date{font-size:12px;color:#A89F97;font-weight:500}
+    .prod-name{font-size:30px;font-weight:800;color:#1E1208;margin-bottom:5px;letter-spacing:-0.03em;line-height:1.1}
+    .prod-type{font-size:14px;color:#6B6059;font-weight:400;margin-bottom:28px;line-height:1.5}
+    .hero{background:linear-gradient(135deg,#E8532A,#C8391A);border-radius:14px;padding:24px 28px;text-align:center;margin-bottom:24px}
+    .h-label{font-size:12px;font-weight:700;color:rgba(255,255,255,0.78);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px}
+    .h-price{font-size:50px;font-weight:800;color:#fff;letter-spacing:-0.04em;line-height:1}
+    .h-note{font-size:13px;color:rgba(255,255,255,0.68);font-weight:500;margin-top:6px}
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
-    .tile{border:1.5px solid #E8DDD4;border-radius:10px;padding:14px}
-    .t-lbl{font-size:10px;font-weight:700;color:#A89F97;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px}
-    .t-val{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#1E1208}
+    .tile{border:1.5px solid #E8DDD4;border-radius:10px;padding:15px 16px}
+    .t-lbl{font-size:11px;font-weight:700;color:#A89F97;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px}
+    .t-val{font-size:24px;font-weight:800;color:#1E1208;letter-spacing:-0.03em;line-height:1}
     .t-val.accent{color:#E8532A}
     .t-val.green{color:#5B8C5A}
-    table{width:100%;border-collapse:collapse}
-    tr{border-bottom:1px solid #F5EDE3}
-    td{padding:9px 0;font-size:13px;font-weight:600;color:#1E1208}
-    td:last-child{text-align:right}
-    td.muted{color:#A89F97}
-    .footer{margin-top:36px;padding-top:16px;border-top:1px solid #E8DDD4;font-size:10px;color:#A89F97;font-weight:600;letter-spacing:0.04em}
+    .footer{margin-top:36px;padding-top:16px;border-top:1px solid #E8DDD4;font-size:12px;color:#A89F97;font-weight:400;line-height:1.5}
     @media print{body{padding:24px}button{display:none}}
   </style></head><body>
   <div class="top">
     <div class="brand">Stitch &amp; Sell<small>Leather Cost Calculator</small></div>
     <div class="date">Generated ${date}</div>
   </div>
-  <div style="font-size:36px;margin-bottom:6px">${em}</div>
+  <div style="font-size:38px;margin-bottom:8px">${em}</div>
   <div class="prod-name">${name}</div>
   <div class="prod-type">Batch: ${qty} piece(s) · ${sym} · ${mg} margin target</div>
   <div class="hero">
