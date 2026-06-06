@@ -182,7 +182,7 @@ nav {
 /* ── MAIN ── */
 main {
   flex: 1;
-  padding: 20px 16px 100px;
+  padding: 20px 16px 148px;
 }
 
 .page { display: none; }
@@ -897,10 +897,419 @@ input[type="range"]::-webkit-slider-thumb {
   to   { opacity:1; transform: translateX(-50%) translateY(0); }
 }
 
+/* ══════════════════════════════════════════
+   LIVE COST SUMMARY CARD
+══════════════════════════════════════════ */
+.live-summary {
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 14px;
+  box-shadow: 0 4px 20px rgba(30,18,8,0.10);
+  overflow: hidden;
+}
+
+.ls-header {
+  background: linear-gradient(135deg, #1E1208 0%, #3A2210 100%);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ls-header-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ls-live-dot {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #7DB87C;
+}
+
+.ls-pulse {
+  width: 7px;
+  height: 7px;
+  background: #7DB87C;
+  border-radius: 50%;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:0.5; transform:scale(0.7); }
+}
+
+.ls-body {
+  padding: 0 16px 4px;
+}
+
+.ls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f5ede3;
+}
+
+.ls-row:last-child { border-bottom: none; }
+
+.ls-row-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.ls-row-label .ls-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ls-row-val {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Divider line between cost rows and price rows */
+.ls-divider {
+  border: none;
+  border-top: 2px dashed var(--border);
+  margin: 4px 0;
+}
+
+/* Total cost row - emphasized */
+.ls-row.total-cost .ls-row-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.ls-row.total-cost .ls-row-val {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+}
+
+/* Sell price hero row */
+.ls-sell-block {
+  background: linear-gradient(135deg, var(--terra) 0%, #C8391A 100%);
+  margin: 4px -16px 0;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ls-sell-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ls-sell-val {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ls-sell-cur {
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0.85;
+  margin-right: 2px;
+}
+
+/* Profit row under the sell block */
+.ls-profit-block {
+  background: var(--sage-bg);
+  border-top: 1px solid #d4e8d3;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 -16px;
+}
+
+.ls-profit-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sage);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ls-profit-val {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.2s;
+}
+
+.ls-profit-val.positive { color: var(--sage); }
+.ls-profit-val.negative { color: var(--terra); background: var(--terra-bg); }
+
+.ls-margin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(91,140,90,0.15);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sage);
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.ls-margin-badge.neg { background: rgba(232,83,42,0.12); color: var(--terra); }
+
+/* Collapsed padding fix */
+.ls-body-inner { padding-bottom: 12px; }
+
+/* ══ RUNNING TOTALS (inside each card) ══ */
+.running-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 8px 12px;
+  margin-top: 10px;
+}
+
+.rt-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray);
+  letter-spacing: 0.02em;
+}
+
+.rt-val {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--terra);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ══ FLOATING MOBILE BAR ══ */
+#floatBar {
+  position: fixed;
+  bottom: 68px; /* sits right above the nav */
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 28px);
+  max-width: 452px;
+  background: #1E1208;
+  border-radius: 14px;
+  padding: 10px 16px;
+  z-index: 98;
+  box-shadow: 0 -2px 20px rgba(30,18,8,0.22), 0 4px 16px rgba(30,18,8,0.3);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: none; /* shown only on calc page */
+}
+
+#floatBar:active { transform: translateX(-50%) scale(0.99); }
+
+.fb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.fb-item {
+  flex: 1;
+  text-align: center;
+}
+
+.fb-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1px;
+}
+
+.fb-val {
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-val.accent { color: var(--sun); }
+.fb-val.profit { color: #7DB87C; }
+.fb-val.loss   { color: #FF7A52; }
+
+.fb-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+
+.fb-tap-hint {
+  text-align: center;
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.08em;
+  margin-top: 5px;
+}
+
+/* ══ EXPANDED PRICE OVERLAY (tap bar to expand) ══ */
+#priceOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(30,18,8,0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+#priceOverlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.po-sheet {
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 480px;
+  padding: 20px 20px 36px;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.32,0.72,0,1);
+}
+
+#priceOverlay.open .po-sheet { transform: translateY(0); }
+
+.po-handle {
+  width: 40px;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 0 auto 16px;
+}
+
+.po-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.po-hero {
+  background: linear-gradient(135deg, var(--terra) 0%, #C8391A 100%);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.po-hero-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.po-hero-price {
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.po-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.po-tile {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 11px 13px;
+}
+
+.po-tile-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gray-lt);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.po-tile-val {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.po-tile-val.green { color: var(--sage); }
+.po-tile-val.red   { color: var(--terra); }
+
+.po-close {
+  width: 100%;
+  padding: 13px;
+  background: var(--ink);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+}
+
 /* ── PRINT ── */
 @media print {
   body { background: white; }
-  header, nav, .no-print { display: none !important; }
+  header, nav, .no-print, #floatBar, #priceOverlay { display: none !important; }
   main { padding: 0; }
   #pg-calc { display: block !important; }
 }
@@ -951,6 +1360,52 @@ input[type="range"]::-webkit-slider-thumb {
       </div>
     </div>
 
+    <!-- ══ LIVE COST SUMMARY CARD ══ -->
+    <div class="live-summary no-print">
+      <div class="ls-header">
+        <div class="ls-header-title">Live Cost Summary</div>
+        <div class="ls-live-dot"><div class="ls-pulse"></div>Updating live</div>
+      </div>
+      <div class="ls-body">
+        <div class="ls-body-inner">
+          <div class="ls-row">
+            <span class="ls-row-label"><span class="ls-dot" style="background:var(--terra)"></span>Total material cost</span>
+            <span class="ls-row-val" id="ls-mat">AED 0.00</span>
+          </div>
+          <div class="ls-row">
+            <span class="ls-row-label"><span class="ls-dot" style="background:var(--sage)"></span>Labor cost</span>
+            <span class="ls-row-val" id="ls-lab">AED 0.00</span>
+          </div>
+          <div class="ls-row">
+            <span class="ls-row-label"><span class="ls-dot" style="background:var(--sky)"></span>Overhead cost</span>
+            <span class="ls-row-val" id="ls-over">AED 0.00</span>
+          </div>
+          <hr class="ls-divider">
+          <div class="ls-row total-cost">
+            <span class="ls-row-label"><span class="ls-dot" style="background:var(--ink)"></span>Total cost / piece</span>
+            <span class="ls-row-val" id="ls-total">AED 0.00</span>
+          </div>
+        </div>
+        <div class="ls-sell-block">
+          <div>
+            <div class="ls-sell-label">Suggested selling price</div>
+            <div class="ls-sell-val"><span class="ls-sell-cur" id="ls-sym">AED</span><span id="ls-sell">0.00</span></div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px;">Margin</div>
+            <div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.02em;" id="ls-mgpct">0%</div>
+          </div>
+        </div>
+        <div class="ls-profit-block">
+          <div class="ls-profit-label">Estimated profit</div>
+          <div style="display:flex;align-items:center;">
+            <span class="ls-profit-val positive" id="ls-profit">AED 0.00</span>
+            <span class="ls-margin-badge" id="ls-mbadge">0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Tab strip -->
     <div class="tab-strip">
       <button class="tab-btn active" onclick="goTab('mat')">Materials</button>
@@ -976,6 +1431,10 @@ input[type="range"]::-webkit-slider-thumb {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Add material
         </button>
+        <div class="running-total">
+          <span class="rt-label">Leather &amp; materials subtotal</span>
+          <span class="rt-val" id="rt-mat">AED 0.00</span>
+        </div>
       </div>
 
       <div class="card">
@@ -993,6 +1452,10 @@ input[type="range"]::-webkit-slider-thumb {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Add hardware / thread / dye
         </button>
+        <div class="running-total">
+          <span class="rt-label">Hardware &amp; supplies subtotal</span>
+          <span class="rt-val" id="rt-hw">AED 0.00</span>
+        </div>
       </div>
     </div>
 
@@ -1040,6 +1503,10 @@ input[type="range"]::-webkit-slider-thumb {
         <div class="field"><label>Workspace / rent share (<span class="csym">AED</span>)</label><input type="number" id="rent" value="0" min="0" step="0.5" oninput="recalc()"></div>
         <div class="field"><label>Shipping / delivery (<span class="csym">AED</span>)</label><input type="number" id="ship" value="0" min="0" step="0.5" oninput="recalc()"></div>
         <div class="field" style="margin-bottom:0;"><label>Other overhead (<span class="csym">AED</span>)</label><input type="number" id="other" value="0" min="0" step="0.5" oninput="recalc()"></div>
+        <div class="running-total" style="margin-top:14px;">
+          <span class="rt-label">Overhead subtotal</span>
+          <span class="rt-val" id="rt-over">AED 0.00</span>
+        </div>
       </div>
     </div>
 
@@ -1221,6 +1688,74 @@ input[type="range"]::-webkit-slider-thumb {
   </button>
 </nav>
 
+<!-- ══ FLOATING MOBILE SUMMARY BAR ══ -->
+<div id="floatBar" onclick="openOverlay()">
+  <div class="fb-row">
+    <div class="fb-item">
+      <div class="fb-label">Total Cost</div>
+      <div class="fb-val" id="fb-cost">AED 0.00</div>
+    </div>
+    <div class="fb-divider"></div>
+    <div class="fb-item">
+      <div class="fb-label">Sell Price</div>
+      <div class="fb-val accent" id="fb-sell">AED 0.00</div>
+    </div>
+    <div class="fb-divider"></div>
+    <div class="fb-item">
+      <div class="fb-label">Profit</div>
+      <div class="fb-val profit" id="fb-profit">AED 0.00</div>
+    </div>
+  </div>
+  <div class="fb-tap-hint">TAP TO EXPAND ↑</div>
+</div>
+
+<!-- ══ PRICE OVERLAY (expanded from float bar) ══ -->
+<div id="priceOverlay" onclick="closeOverlay(event)">
+  <div class="po-sheet">
+    <div class="po-handle"></div>
+    <div class="po-title">Full pricing breakdown</div>
+    <div class="po-hero">
+      <div>
+        <div class="po-hero-label">Suggested selling price</div>
+        <div class="po-hero-price"><span id="po-sym">AED</span> <span id="po-sell">0.00</span></div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">Margin</div>
+        <div style="font-size:24px;font-weight:800;color:#fff;letter-spacing:-0.02em;" id="po-mg">0%</div>
+      </div>
+    </div>
+    <div class="po-grid">
+      <div class="po-tile">
+        <div class="po-tile-label">Materials</div>
+        <div class="po-tile-val" id="po-mat">0.00</div>
+      </div>
+      <div class="po-tile">
+        <div class="po-tile-label">Labor</div>
+        <div class="po-tile-val" id="po-lab">0.00</div>
+      </div>
+      <div class="po-tile">
+        <div class="po-tile-label">Overhead</div>
+        <div class="po-tile-val" id="po-over">0.00</div>
+      </div>
+      <div class="po-tile">
+        <div class="po-tile-label">Cost / piece</div>
+        <div class="po-tile-val" id="po-cpp">0.00</div>
+      </div>
+    </div>
+    <div class="po-tile" style="margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div class="po-tile-label">Estimated profit</div>
+        <div class="po-tile-val green" id="po-profit">0.00</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="po-tile-label">Actual margin</div>
+        <div class="po-tile-val green" id="po-actmg">0%</div>
+      </div>
+    </div>
+    <button class="po-close" onclick="closeOverlay()">Close</button>
+  </div>
+</div>
+
 </div>
 
 <script>
@@ -1254,6 +1789,9 @@ function init() {
   onMargin(40);
   recalc();
   renderSaved();
+  // Show float bar on start (calculator is the default page)
+  const fb = document.getElementById('floatBar');
+  if(fb) fb.style.display = 'block';
 }
 
 function buildProdGrid() {
@@ -1325,45 +1863,86 @@ function recalc() {
   const qty   = parseInt(document.getElementById('qty')?.value)||1;
   const mg    = parseInt(document.getElementById('mgSlider')?.value)||0;
 
-  const batchCost = mat+hw+labor+over;
-  const cpp = batchCost/qty;
-  const sell = mg<100 ? cpp/(1-mg/100) : cpp*2;
-  const profit = sell-cpp;
-  const actMg = sell>0 ? (profit/sell*100) : 0;
+  const matTotal  = mat + hw;
+  const batchCost = matTotal + labor + over;
+  const cpp       = batchCost / qty;
+  const sell      = mg < 100 ? cpp / (1 - mg/100) : cpp * 2;
+  const profit    = sell - cpp;
+  const actMg     = sell > 0 ? (profit / sell * 100) : 0;
   const sym = currency;
-  const f = v => v.toFixed(2);
+  const f   = v => v.toFixed(2);
+  const fc  = v => sym + ' ' + v.toFixed(2);
 
-  // labor display
+  // ── Running totals (inside each card) ──
+  const set = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = v; };
+  set('rt-mat',  fc(mat));
+  set('rt-hw',   fc(hw));
+  set('rt-over', fc(over));
+
+  // ── Live Summary Card ──
+  set('ls-mat',   fc(matTotal));
+  set('ls-lab',   fc(labor));
+  set('ls-over',  fc(over));
+  set('ls-total', fc(cpp));
+  set('ls-sell',  f(sell));
+  set('ls-mgpct', actMg.toFixed(1) + '%');
+  document.querySelectorAll('.ls-sell-cur, #ls-sym').forEach(el => el.textContent = sym);
+
+  const profEl = document.getElementById('ls-profit');
+  if(profEl) {
+    profEl.textContent = fc(profit);
+    profEl.className = 'ls-profit-val ' + (profit >= 0 ? 'positive' : 'negative');
+  }
+  const mbEl = document.getElementById('ls-mbadge');
+  if(mbEl) {
+    mbEl.textContent = actMg.toFixed(1) + '%';
+    mbEl.className = 'ls-margin-badge' + (profit < 0 ? ' neg' : '');
+  }
+
+  // ── Labor section display ──
   const lv = document.getElementById('laborVal');
-  if(lv) lv.textContent = sym+' '+f(labor);
+  if(lv) lv.textContent = fc(labor);
 
-  // hero
-  const hp = document.getElementById('heroPrice');
-  if(hp) hp.textContent = f(sell);
-  const hs = document.getElementById('heroSym');
-  if(hs) hs.textContent = sym;
-  const hn = document.getElementById('heroNote');
-  if(hn) hn.textContent = `per piece · ${actMg.toFixed(1)}% margin`;
-
-  // tiles
-  const set = (id,v)=>{ const el=document.getElementById(id); if(el)el.textContent=v; };
+  // ── Pricing tab hero ──
+  set('heroPrice', f(sell));
+  const hs = document.getElementById('heroSym'); if(hs) hs.textContent = sym;
+  const hn = document.getElementById('heroNote'); if(hn) hn.textContent = `per piece · ${actMg.toFixed(1)}% margin`;
   set('batchCostVal', f(batchCost));
   set('cppVal', f(cpp));
   set('profitVal', f(profit));
-  set('marginVal', actMg.toFixed(1)+'%');
+  set('marginVal', actMg.toFixed(1) + '%');
 
-  // breakdown
+  // ── Breakdown in Pricing tab ──
   const bd = document.getElementById('breakdown');
   if(bd) bd.innerHTML = `
-    <div class="breakdown-item"><span class="bi-label"><span class="bi-dot" style="background:var(--terra)"></span>Raw materials</span><span class="bi-amount">${sym} ${f(mat)}</span></div>
-    <div class="breakdown-item"><span class="bi-label"><span class="bi-dot" style="background:#C8861A"></span>Hardware &amp; supplies</span><span class="bi-amount">${sym} ${f(hw)}</span></div>
-    <div class="breakdown-item"><span class="bi-label"><span class="bi-dot" style="background:var(--sage)"></span>Labor (${mins} min)</span><span class="bi-amount">${sym} ${f(labor)}</span></div>
-    <div class="breakdown-item"><span class="bi-label"><span class="bi-dot" style="background:var(--sky)"></span>Overhead</span><span class="bi-amount">${sym} ${f(over)}</span></div>
-    <div class="breakdown-item total"><span class="bi-label"><span class="bi-dot" style="background:var(--ink)"></span>Cost per piece</span><span class="bi-amount">${sym} ${f(cpp)}</span></div>`;
+    <div class="breakdown-item"><span class="bi-label"><span class="bi-dot" style="background:var(--terra)"></span>Raw materials</span><span class="bi-amount">${fc(mat)}</span></div>
+    <div class="breakdown-item"><span class="bi-label"><span class="bi-dot" style="background:#C8861A"></span>Hardware &amp; supplies</span><span class="bi-amount">${fc(hw)}</span></div>
+    <div class="breakdown-item"><span class="bi-label"><span class="bi-dot" style="background:var(--sage)"></span>Labor (${mins} min)</span><span class="bi-amount">${fc(labor)}</span></div>
+    <div class="breakdown-item"><span class="bi-label"><span class="bi-dot" style="background:var(--sky)"></span>Overhead</span><span class="bi-amount">${fc(over)}</span></div>
+    <div class="breakdown-item total"><span class="bi-label"><span class="bi-dot" style="background:var(--ink)"></span>Cost per piece</span><span class="bi-amount">${fc(cpp)}</span></div>`;
 
-  // slider gradient
+  // ── Slider gradient ──
   const sl = document.getElementById('mgSlider');
-  if(sl) sl.style.setProperty('--pct', mg+'%');
+  if(sl) sl.style.setProperty('--pct', mg + '%');
+
+  // ── Floating bar ──
+  set('fb-cost',   fc(cpp));
+  set('fb-sell',   fc(sell));
+  set('fb-profit', fc(profit));
+  const fpEl = document.getElementById('fb-profit');
+  if(fpEl) fpEl.className = 'fb-val ' + (profit >= 0 ? 'profit' : 'loss');
+
+  // ── Price overlay ──
+  set('po-sym',    sym);
+  set('po-sell',   f(sell));
+  set('po-mg',     actMg.toFixed(1) + '%');
+  set('po-mat',    f(matTotal));
+  set('po-lab',    f(labor));
+  set('po-over',   f(over));
+  set('po-cpp',    f(cpp));
+  set('po-actmg',  actMg.toFixed(1) + '%');
+  const ppEl = document.getElementById('po-profit');
+  if(ppEl) { ppEl.textContent = f(profit); ppEl.className = 'po-tile-val ' + (profit >= 0 ? 'green' : 'red'); }
 }
 
 function onMargin(v) {
@@ -1387,6 +1966,20 @@ function showPage(p) {
   document.getElementById('pg-'+p).classList.add('active');
   document.getElementById('nb-'+p).classList.add('active');
   if(p==='prods') renderSaved();
+  // Show float bar only on calculator page
+  const fb = document.getElementById('floatBar');
+  if(fb) fb.style.display = p === 'calc' ? 'block' : 'none';
+}
+
+// ── OVERLAY ──
+function openOverlay() {
+  document.getElementById('priceOverlay').classList.add('open');
+}
+
+function closeOverlay(e) {
+  if(!e || e.target === document.getElementById('priceOverlay') || e.currentTarget === document.querySelector('.po-close')) {
+    document.getElementById('priceOverlay').classList.remove('open');
+  }
 }
 
 // ── SAVE / RENDER ──
